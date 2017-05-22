@@ -13,14 +13,13 @@ library(ggplot2)
 library(dplyr)
 library(ggthemes)
 library(reshape2)
-library(ggthemes)
 library(stringr)
 
 # Set working directory.
 
 setwd("~/ownCloud/Innovation Network Analysis/Literature Review") # MacBook
 setwd("d:/Andrew/ownCloud/Innovation Network Analysis/Literature Review") # Home PC
-# setwd("c:/Users/ter053/ownCloud/Innovation Network Analysis/Literature Review") # work PC
+setwd("z:/ownCloud/Innovation Network Analysis/Literature Review") # work PC
 
 # Load data.
 
@@ -83,7 +82,7 @@ ggplot(melted, aes(Year, value, col = var)) +
   geom_line(data = filter(melted, variable == "AC_TK"), linetype = 1, size = 1.5) +
   geom_line(data = filter(melted, variable == "OI_TK"), linetype = 1, size = 1.5) +
 #  theme_few() +
-#  the?.,mnjbhvgcfxdzsAsdrfikopl=-0  theme_fivethirtyeight() +
+  theme_fivethirtyeight() +
   theme(legend.text=element_text(size=8)) +
   scale_colour_discrete(name = "Research Topic", 
                         breaks = c("Absorptive Capacity", "Open Innovation",
