@@ -39,17 +39,17 @@ citations <- subset(citations, citations$Year <= 2016)
 melted <- melt(citations, id.var = "Year")
 
 nr <- seq(0,400, by = 50) # breaks for number of research articles/year
+melted$var <- factor(melted$variable, levels = c("AC", "OI", "TK", "OI_AC", "AC_TK", "OI_TK"), ordered = TRUE) # reorder
+titles <- c(AC = "AC", OI = "OI", TK = "TK", OI_AC = "OI & AC", AC_TK = "AC & TK", OI_TK = "OI & TK")
+
+melted$var <- plyr::revalue(melted$variable,titles)
+
 
 # Create faceted plot.
 
 yr <- seq(1990,2016, by = 4) # breaks for years
 
-melted$var <- factor(melted$variable, levels = c("AC", "OI", "TK", "OI_AC", "AC_TK", "OI_TK"), ordered = TRUE) # reorder
-titles <- c(AC = "Absorptive Capacity", OI = "Open Innovation", TK = "Tacit Knowledge", 
-            OI_AC = "Open Innovation & Absorptive Capacity", AC_TK = "Absorptive Capacity & Tacit Knowledge",
-            OI_TK = "Open Innovation & Tacit Knowledge")
 
-melted$var <- plyr::revalue(melted$variable,titles)
 
 
 ggplot(melted, aes(Year, value, fill = variable)) +
@@ -84,14 +84,8 @@ ggplot(melted, aes(Year, value, col = var)) +
 #  theme_few() +
   theme_fivethirtyeight() +
   theme(legend.text=element_text(size=8)) +
-  scale_colour_discrete(name = "Research Topic", 
-                        breaks = c("Absorptive Capacity", "Open Innovation",
-                        "Tacit Knowledge", "Open Innovation & Absorptive Capacity",
-                        "Absorptive Capacity & Tacit Knowledge",
-                        "Open Innovation & Tacit Knowledge"),
-                        labels = c("Absorptive Capacity", "Open Innovation", "Tacit Knowledge",
-                        "Open Innovation & Absorptive Capacity", "Absorptive Capacity & Tacit Knowledge",
-                        "Open Innovation & Tacit Knowledge")) +
+  scale_colour_discrete(name = "Research Topic", breaks = c("AC", "OI", "TK", "OI & AC", "AC & TK", "OI & TK"),
+                        labels = c("AC", "OI", "TK", "OI & AC", "AC & TK", "OI & TK"))+
   scale_x_continuous(breaks = yr) +
   scale_y_continuous(breaks = nr) +
   theme(axis.text.y = element_text(size = 8), axis.text.x = element_text(angle = 90, vjust = 0.5, size = 8), axis.title = element_text(size=12,face="bold")) +
